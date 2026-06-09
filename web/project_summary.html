@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Rapport de Projet — Olist Data Mining</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+  :root {
+    --bg: #0f0f13;
+    --bg2: #16161d;
+    --bg3: #1e1e28;
+    --border: #2a2a38;
+    --text: #e8e8f0;
+    --muted: #7a7a96;
+    --accent1: #6c63ff;
+    --accent2: #00d4aa;
+    --accent3: #ff6b6b;
+    --accent4: #ffa94d;
+    --gold: #f0c040;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    padding: 0 0 80px;
+  }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, #0f0f13 0%, #1a1430 50%, #0f1a1a 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 64px 60px 48px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 60% 80% at 80% 50%, rgba(108,99,255,0.12) 0%, transparent 70%),
+                radial-gradient(ellipse 40% 60% at 10% 80%, rgba(0,212,170,0.08) 0%, transparent 60%);
+  }
+  .hero-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent2);
+    margin-bottom: 20px;
+  }
+  .hero h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 48px;
+    line-height: 1.15;
+    max-width: 680px;
+    margin-bottom: 16px;
+    position: relative;
+  }
+  .hero h1 em { color: var(--accent1); font-style: italic; }
+  .hero-sub {
+    color: var(--muted);
+    font-size: 15px;
+    max-width: 520px;
+    position: relative;
+  }
+  .hero-meta {
+    display: flex;
+    gap: 32px;
+    margin-top: 40px;
+    position: relative;
+  }
+  .meta-pill {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 18px;
+    font-size: 13px;
+  }
+  .meta-pill span { color: var(--muted); font-size: 11px; display: block; margin-bottom: 2px; font-family: 'DM Mono', monospace; letter-spacing: 1px; text-transform: uppercase; }
+  .meta-pill strong { color: var(--accent2); }
+
+  /* LAYOUT */
+  .container { max-width: 960px; margin: 0 auto; padding: 0 60px; }
+
+  /* SECTION HEADERS */
+  .section {
+    margin-top: 56px;
+  }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 24px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--border);
+  }
+  .section-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 2px;
+  }
+  .section-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 22px;
+    color: var(--text);
+  }
+  .tag {
+    margin-left: auto;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    padding: 3px 10px;
+    border-radius: 4px;
+    color: var(--muted);
+    letter-spacing: 1px;
+  }
+
+  /* PHASE CARDS */
+  .phase-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .phase-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 22px 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  .phase-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    border-radius: 12px 12px 0 0;
+  }
+  .phase-card.p1::before { background: var(--accent2); }
+  .phase-card.p2::before { background: var(--accent1); }
+  .phase-card.p3::before { background: var(--accent4); }
+  .phase-card.p4::before { background: var(--accent3); }
+  .phase-card.p5::before { background: var(--gold); }
+  .phase-card.p6::before { background: #a78bfa; }
+  .phase-card.p7::before { background: #34d399; }
+  .phase-card.p8::before { background: #f472b6; }
+  .phase-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+  .phase-name {
+    font-size: 15px;
+    font-weight: 500;
+    margin-bottom: 10px;
+    color: var(--text);
+  }
+  .phase-desc {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+  .phase-cells {
+    margin-top: 12px;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--accent2);
+    opacity: 0.7;
+  }
+
+  /* ALGO TABLE */
+  .algo-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13.5px;
+  }
+  .algo-table thead tr {
+    background: var(--bg3);
+    border-bottom: 1px solid var(--border);
+  }
+  .algo-table th {
+    text-align: left;
+    padding: 12px 16px;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 400;
+  }
+  .algo-table td {
+    padding: 13px 16px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  .algo-table tr:last-child td { border-bottom: none; }
+  .algo-table tr:hover td { background: rgba(255,255,255,0.02); }
+  .algo-name { font-weight: 500; color: var(--text); }
+  .algo-type {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    letter-spacing: 1px;
+  }
+  .type-sup { background: rgba(108,99,255,0.15); color: var(--accent1); }
+  .type-unsup { background: rgba(0,212,170,0.12); color: var(--accent2); }
+  .type-anomaly { background: rgba(255,107,107,0.12); color: var(--accent3); }
+  .type-reg { background: rgba(255,169,77,0.12); color: var(--accent4); }
+  .auc-val { font-family: 'DM Mono', monospace; color: var(--gold); font-size: 13px; }
+  .auc-best { color: var(--accent2); font-weight: 600; }
+
+  /* RESULT BOX */
+  .result-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+  .result-box {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+  }
+  .result-val {
+    font-family: 'DM Mono', monospace;
+    font-size: 22px;
+    color: var(--accent2);
+    font-weight: 500;
+    display: block;
+    margin-bottom: 4px;
+  }
+  .result-label {
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-family: 'DM Mono', monospace;
+  }
+
+  /* CONCLUSION */
+  .conclusion-box {
+    background: linear-gradient(135deg, rgba(108,99,255,0.08), rgba(0,212,170,0.06));
+    border: 1px solid rgba(108,99,255,0.25);
+    border-radius: 14px;
+    padding: 28px 32px;
+  }
+  .conclusion-box h3 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 18px;
+    margin-bottom: 16px;
+    color: var(--accent1);
+  }
+  .finding {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 12px;
+    align-items: flex-start;
+  }
+  .finding-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--accent2);
+    background: rgba(0,212,170,0.1);
+    border-radius: 4px;
+    padding: 2px 7px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .finding-text { font-size: 14px; color: var(--muted); line-height: 1.6; }
+  .finding-text strong { color: var(--text); }
+
+  /* BEST BADGE */
+  .best-badge {
+    display: inline-block;
+    background: rgba(240,192,64,0.15);
+    border: 1px solid rgba(240,192,64,0.3);
+    color: var(--gold);
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 1px;
+    padding: 1px 6px;
+    border-radius: 3px;
+    text-transform: uppercase;
+    margin-left: 6px;
+    vertical-align: middle;
+  }
+
+  /* DIVIDER */
+  .divider {
+    height: 1px;
+    background: var(--border);
+    margin: 48px 0;
+  }
+
+  /* TECH STACK */
+  .tech-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .tech-pill {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    padding: 6px 14px;
+    border-radius: 6px;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  .cells-range {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--accent1);
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="container">
+    <div class="hero-label">Summary de Projet Data Mining - Tayssir Fathalli 2LBD2</div>
+    <h1>Analyse E-Commerce<br><em>Brazilian Olist Dataset</em></h1>
+    <p class="hero-sub">Projet complet de data mining sur 99 441 commandes — exploration, nettoyage, clustering, règles d'association et classification supervisée avec 9 algorithmes.</p>
+    <div class="hero-meta">
+      <div class="meta-pill"><span>Cellules</span><strong>438 cellules</strong></div>
+      <div class="meta-pill"><span>Dataset</span><strong>99 441 commandes</strong></div>
+      <div class="meta-pill"><span>Algorithmes</span><strong>9 modèles ML</strong></div>
+      <div class="meta-pill">
+        <span>Source</span>
+        <a href="https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce" 
+          target="_blank"
+          style="color:var(--accent2); text-decoration:none; font-weight:500;">
+          Kaggle — Olist ↗
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- PHASES -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <span class="section-title">Structure du Projet — 8 Phases</span>
+      <span class="tag">CELLS 1–438</span>
+    </div>
+    <div class="phase-grid">
+
+      <div class="phase-card p1">
+        <div class="phase-label">Phase 1</div>
+        <div class="phase-name">Exploration Initiale</div>
+        <div class="phase-desc">Chargement des 9 tables Olist. Inspection via <code>info()</code>, <code>head()</code>, <code>describe()</code>. Détection des types incorrects (dates en object), nulls, doublons dans geolocation (261 831 doublons). Compréhension des clés de jointure entre tables.</div>
+        <div class="phase-cells">CELLS 1–25</div>
+      </div>
+
+      <div class="phase-card p2">
+        <div class="phase-label">Phase 2</div>
+        <div class="phase-name">Nettoyage & Feature Engineering</div>
+        <div class="phase-desc">Conversion des 5 colonnes dates en datetime. Création de <code>delivery_days</code>, <code>delivery_delay</code>, <code>order_dayofweek</code>, <code>order_month</code>. Imputation médiane des nulls produits. Agrégation payments + reviews. Construction du dataframe final <code>df</code> (1 ligne = 1 commande livrée).</div>
+        <div class="phase-cells">CELLS 26–107</div>
+      </div>
+
+      <div class="phase-card p3">
+        <div class="phase-label">Phase 3</div>
+        <div class="phase-name">Paramètres Statistiques</div>
+        <div class="phase-desc">Moyenne, médiane, variance, écart-type, étendue sur <code>payment_value</code> et <code>delivery_days</code>. Calcul des quartiles (3 méthodes : pandas, numpy, percentile). IQR via scipy. Détection d'outliers par la règle 1.5×IQR. Groupby par jour et weekend.</div>
+        <div class="phase-cells">CELLS 108–160</div>
+      </div>
+
+      <div class="phase-card p4">
+        <div class="phase-label">Phase 4</div>
+        <div class="phase-name">Graphiques Descriptifs</div>
+        <div class="phase-desc">Histogramme, distribution normale comparée, boxplots (vertical/horizontal), countplot (order_dayofweek), pie chart (payment_type). Fonction <code>finding_outliers()</code> appliquée sur 3 variables. Comparison distribution réelle vs loi normale.</div>
+        <div class="phase-cells">CELLS 161–200</div>
+      </div>
+
+      <div class="phase-card p5">
+        <div class="phase-label">Phase 5</div>
+        <div class="phase-name">Relations entre Variables</div>
+        <div class="phase-desc">Corrélations de Pearson (delivery_days/payment_value r≈0.07, delivery_days/review_score r≈-0.33). Heatmap triangulaire annotée. Scatterplot, regplot avec droite de régression. FacetGrid 2D (late_delivery × payment_type). KDE 2D. Pearson stratifié par catégorie.</div>
+        <div class="phase-cells">CELLS 203–270</div>
+      </div>
+
+      <div class="phase-card p6">
+        <div class="phase-label">Phase 5 bis</div>
+        <div class="phase-name">Variables Qualitatives & Contingences</div>
+        <div class="phase-desc">Tableaux de contingence satisfaction × order_dayofweek (brut, normalisé lignes, normalisé colonnes). Analyse category_en × late_delivery. Croisement seller_state × category_en × late_delivery. Countplot et boxplot groupé par catégorie et état vendeur.</div>
+        <div class="phase-cells">CELLS 272–337</div>
+      </div>
+
+      <div class="phase-card p7">
+        <div class="phase-label">Phase 6 & 7</div>
+        <div class="phase-name">Clustering K-Means & Apriori</div>
+        <div class="phase-desc">Construction table RFM client. Elbow Method → K=3 optimal. Silhouette Score 0.4845 confirme K=3. Profils clusters (perdus / VIP / réguliers). K-Means 1D sur payment_value, 2D price×freight, make_blobs K=3 et K=6. Apriori sur catégories : home_confort → bed_bath_table (lift=3.85).</div>
+        <div class="phase-cells">CELLS 338–371</div>
+      </div>
+
+      <div class="phase-card p8">
+        <div class="phase-label">Phase 8</div>
+        <div class="phase-name">Classification Supervisée + Correctifs</div>
+        <div class="phase-desc">Feature engineering (6→14 features). SMOTE pour rééquilibrage 78/22%. 9 algorithmes entraînés avec class_weight. Seuil optimal via courbe Precision-Recall. Isolation Forest, PCA, CAH, DBSCAN, Régression linéaire. Comparaison finale tous modèles.</div>
+        <div class="phase-cells">CELLS 372–438</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ALGORITHMS -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <span class="section-title">Algorithmes Implémentés</span>
+      <span class="tag">9 MODÈLES ML</span>
+    </div>
+
+    <table class="algo-table">
+      <thead>
+        <tr>
+          <th>Algorithme</th>
+          <th>Famille</th>
+          <th>Type</th>
+          <th>AUC-ROC</th>
+          <th>Rôle dans le projet</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="algo-name">Gradient Boosting</span><span class="best-badge">🏆 Best</span></td>
+          <td><span class="cells-range">Cell 401</span></td>
+          <td><span class="algo-type type-sup">Supervisé</span></td>
+          <td><span class="auc-val auc-best">0.6834</span></td>
+          <td style="color:var(--muted)">Meilleur AUC. Arbres séquentiels boostés. Corrige les erreurs de chaque arbre précédent.</td>
+        </tr>
+        <tr>
+          <td><span class="algo-name">XGBoost</span></td>
+          <td><span class="cells-range">Cell 407</span></td>
+          <td><span class="algo-type type-sup">Supervisé</span></td>
+          <td><span class="auc-val">0.6801</span></td>
+          <td style="color:var(--muted)">Implémentation optimisée de GB. scale_pos_weight pour le déséquilibre des classes.</td>
+        </tr>
+        <tr>
+          <td><span class="algo-name">Random Forest</span></td>
+          <td><span class="cells-range">Cell 392</span></td>
+          <td><span class="algo-type type-sup">Supervisé</span></td>
+          <td><span class="auc-val">0.6700</span></td>
+          <td style="color:var(--muted)">200 arbres parallèles (bagging). class_weight='balanced'. Feature importance stable.</td>
+        </tr>
+        <tr>
+          <td><span class="algo-name">Logistic Regression</span></td>
+          <td><span class="cells-range">Cell 383</span></td>
+          <td><span class="algo-type type-sup">Supervisé</span></td>
+          <td><span class="auc-val">0.6510</span></td>
+          <td style="color:var(--muted)">Baseline interprétable. GridSearchCV pour C optimal. Coefficients directement lisibles.</td>
+        </tr>
+        <tr>
+          <td><span class="algo-name">Decision Tree</span></td>
+          <td><span class="cells-range">Cell 388</span></td>
+          <td><span class="algo-type type-sup">Supervisé</span></td>
+          <td><span class="auc-val">0.6520</span></td>
+          <td style="color:var(--muted)">max_depth=5. Visualisation de l'arbre. Meilleur recall Non-Positive (58%).</td>
+        </tr>
+        <tr>
+          <td><span class="algo-name">SVM (LinearSVC)</span></td>
+          <td><span class="cells-range">Cell 396</span></td>
+          <td><span class="algo-type type-sup">Supervisé</span></td>
+          <td><span class="auc-val">0.6480</span></td>
+          <td style="color:var(--muted)">LinearSVC + CalibratedClassifierCV. Stratified sampling (15k). class_weight='balanced'.</td>
+        </tr>
+        <tr>
+          <td><span class="algo-name">KNN</span></td>
+          <td><span class="cells-range">Cell 399</span></td>
+          <td><span class="algo-type type-sup">Supervisé</span></td>
+          <td><span class="auc-val">0.6363</span></td>
+          <td style="color:var(--muted)">k=7, weights='distance'. Données SMOTE normalisées. Recherche k optimal par cross-val.</td>
+        </tr>
+        <tr>
+          <td><span class="algo-name">Naive Bayes</span></td>
+          <td><span class="cells-range">Cell 410</span></td>
+          <td><span class="algo-type type-sup">Supervisé</span></td>
+          <td><span class="auc-val">~0.64</span></td>
+          <td style="color:var(--muted)">GaussianNB. Hypothèse d'indépendance. Probabilités a priori + theta_ interprétés.</td>
+        </tr>
+        <tr>
+          <td><span class="algo-name">K-Means RFM</span></td>
+          <td><span class="cells-range">Cells 338–365</span></td>
+          <td><span class="algo-type type-unsup">Non supervisé</span></td>
+          <td><span class="auc-val" style="color:var(--muted)">Silhouette 0.48</span></td>
+          <td style="color:var(--muted)">Segmentation clients. Elbow + Silhouette → K=3. 3 profils : perdus / VIP / réguliers.</td>
+        </tr>
+        <tr>
+          <td><span class="algo-name">CAH (Ward)</span></td>
+          <td><span class="cells-range">Cell 426</span></td>
+          <td><span class="algo-type type-unsup">Non supervisé</span></td>
+          <td><span class="auc-val" style="color:var(--muted)">ARI vs KMeans</span></td>
+          <td style="color:var(--muted)">Dendrogramme sur 200 clients RFM. Validation K-Means. fcluster(t=4) → 3 groupes.</td>
+        </tr>
+        <tr>
+          <td><span class="algo-name">DBSCAN</span></td>
+          <td><span class="cells-range">Cell 430</span></td>
+          <td><span class="algo-type type-unsup">Non supervisé</span></td>
+          <td><span class="auc-val" style="color:var(--muted)">eps=0.8</span></td>
+          <td style="color:var(--muted)">Clustering par densité. Pas de K fixe. Comparaison K-Means vs CAH vs DBSCAN.</td>
+        </tr>
+        <tr>
+          <td><span class="algo-name">Apriori</span></td>
+          <td><span class="cells-range">Cell 368</span></td>
+          <td><span class="algo-type type-unsup">Non supervisé</span></td>
+          <td><span class="auc-val" style="color:var(--muted)">lift=3.85</span></td>
+          <td style="color:var(--muted)">Règles d'association sur categories. home_confort → bed_bath_table. Support, confiance, lift.</td>
+        </tr>
+        <tr>
+          <td><span class="algo-name">Isolation Forest</span></td>
+          <td><span class="cells-range">Cell 416</span></td>
+          <td><span class="algo-type type-anomaly">Anomalies</span></td>
+          <td><span class="auc-val" style="color:var(--muted)">contamination=5%</span></td>
+          <td style="color:var(--muted)">Détection commandes aberrantes. 5% anomalies : livraisons 3× plus longues que la normale.</td>
+        </tr>
+        <tr>
+          <td><span class="algo-name">Régression Linéaire / Ridge</span></td>
+          <td><span class="cells-range">Cells 421–435</span></td>
+          <td><span class="algo-type type-reg">Régression</span></td>
+          <td><span class="auc-val" style="color:var(--muted)">R²=0.47</span></td>
+          <td style="color:var(--muted)">Prédiction de delivery_days. MAE=5.14j, RMSE=6.95j. MSE, RMSE, MAE, R² calculés.</td>
+        </tr>
+        <tr>
+          <td><span class="algo-name">PCA</span></td>
+          <td><span class="cells-range">Cell 419</span></td>
+          <td><span class="algo-type type-unsup">Réduction dim.</span></td>
+          <td><span class="auc-val" style="color:var(--muted)">59% variance</span></td>
+          <td style="color:var(--muted)">Projection 2D des features. Visualisation des clusters K-Means. Loadings interprétés.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- KEY RESULTS -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <span class="section-title">Résultats Clés</span>
+    </div>
+
+    <div class="result-grid">
+      <div class="result-box">
+        <span class="result-val">0.683</span>
+        <span class="result-label">Best AUC-ROC<br>Gradient Boosting</span>
+      </div>
+      <div class="result-box">
+        <span class="result-val">3.85</span>
+        <span class="result-label">Lift Apriori<br>home→bath</span>
+      </div>
+      <div class="result-box">
+        <span class="result-val">−0.33</span>
+        <span class="result-label">Pearson<br>délai/satisfaction</span>
+      </div>
+      <div class="result-box">
+        <span class="result-val">±5.1j</span>
+        <span class="result-label">MAE Régression<br>delivery_days</span>
+      </div>
+    </div>
+
+    <div class="result-grid">
+      <div class="result-box">
+        <span class="result-val">K=3</span>
+        <span class="result-label">Clusters RFM<br>Elbow + Silhouette</span>
+      </div>
+      <div class="result-box">
+        <span class="result-val">14</span>
+        <span class="result-label">Features après<br>engineering</span>
+      </div>
+      <div class="result-box">
+        <span class="result-val">SMOTE</span>
+        <span class="result-label">Rééquilibrage<br>78/22% → 50/50</span>
+      </div>
+      <div class="result-box">
+        <span class="result-val">5%</span>
+        <span class="result-label">Anomalies<br>Isolation Forest</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONCLUSIONS -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <span class="section-title">Conclusions Business</span>
+    </div>
+    <div class="conclusion-box">
+      <h3>Ce que les données révèlent sur Olist</h3>
+
+      <div class="finding">
+        <span class="finding-num">01</span>
+        <span class="finding-text"><strong>Le délai de livraison est le principal prédicteur de satisfaction.</strong> Pearson r = −0.33 (p &lt; 0.05). Tous les modèles (RF, GB, XGB, DT) confirment que <code>delivery_days</code> et <code>delivery_delay</code> sont les features les plus importantes. Livrer avant la date estimée améliore directement la satisfaction.</span>
+      </div>
+
+      <div class="finding">
+        <span class="finding-num">02</span>
+        <span class="finding-text"><strong>La satisfaction peut être prédite avant le contact client.</strong> Le meilleur modèle (Gradient Boosting, AUC=0.683) détecte correctement les insatisfaits sur la base de données logistiques disponibles au moment de la livraison.</span>
+      </div>
+
+      <div class="finding">
+        <span class="finding-num">03</span>
+        <span class="finding-text"><strong>São Paulo est le hub logistique le plus performant.</strong> Frais de livraison les plus bas, proportion de livraisons rapides la plus élevée (37.4% Fast). Les vendeurs SP bénéficient d'un avantage structurel.</span>
+      </div>
+
+      <div class="finding">
+        <span class="finding-num">04</span>
+        <span class="finding-text"><strong>3 segments clients distincts identifiés (RFM).</strong> Cluster 0 : clients perdus (Recency 389j). Cluster 1 : gros dépensiers inactifs → risque de départ. Cluster 2 : clients récents et fidèles → cœur de cible.</span>
+      </div>
+
+      <div class="finding">
+        <span class="finding-num">05</span>
+        <span class="finding-text"><strong>Les associations entre catégories sont rares mais exploitables.</strong> home_confort → bed_bath_table (lift=3.85, confiance 57%). Recommandation cross-selling directement actionnable.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- TECH STACK -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <span class="section-title">Librairies Utilisées</span>
+    </div>
+    <div class="tech-grid">
+      <span class="tech-pill">pandas</span>
+      <span class="tech-pill">numpy</span>
+      <span class="tech-pill">matplotlib</span>
+      <span class="tech-pill">seaborn</span>
+      <span class="tech-pill">scipy.stats</span>
+      <span class="tech-pill">sklearn.preprocessing</span>
+      <span class="tech-pill">sklearn.model_selection</span>
+      <span class="tech-pill">sklearn.tree</span>
+      <span class="tech-pill">sklearn.ensemble</span>
+      <span class="tech-pill">sklearn.svm</span>
+      <span class="tech-pill">sklearn.neighbors</span>
+      <span class="tech-pill">sklearn.linear_model</span>
+      <span class="tech-pill">sklearn.naive_bayes</span>
+      <span class="tech-pill">sklearn.cluster</span>
+      <span class="tech-pill">sklearn.decomposition</span>
+      <span class="tech-pill">sklearn.metrics</span>
+      <span class="tech-pill">xgboost</span>
+      <span class="tech-pill">imbalanced-learn (SMOTE)</span>
+      <span class="tech-pill">mlxtend (Apriori)</span>
+      <span class="tech-pill">scipy.cluster.hierarchy</span>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
